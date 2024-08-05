@@ -1,1 +1,1 @@
-# DeFiStakingPlatform
+DeFiStakingPlatform is a decentralized finance (DeFi) application designed for users to engage in staking mechanisms securely and efficiently. This repository contains the Go backend setup, utilizing the Gin framework to initialize the application, configure routes, and manage server operations. It serves as the core infrastructure for facilitating staking transactions and interactions on the platform.
