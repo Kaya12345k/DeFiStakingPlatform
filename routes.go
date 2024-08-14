@@ -12,16 +12,24 @@ import (
 
 func loadEnv() {
     if err := godotenv.Load(); err != nil {
-        log.Fatal("Error loading .env file")
+        log.Fatalf("Error loading .env file: %v", err)
     }
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Welcome to the API")
+    _, err := fmt.Fprintf(w, "Welcome to the API")
+    if err != nil {
+        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+        log.Printf("homeHandler error: %v", err)
+    }
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "About the API")
+    _, err := fmt.Fprintf(w, "About the API")
+    if err != nil {
+        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+        log.Printf("aboutHandler error: %v", err)
+    }
 }
 
 func routes() *mux.Router {
@@ -42,5 +50,8 @@ func main() {
     }
 
     fmt.Printf("Starting server on port %s\n", httpPort)
-    log.Fatal(http.ListenAndServe(":"+httpPort, r))
+    err := http.ListenAndServe(":"+httpPort, r)
+    if err != nil {
+        log.Fatalf("Failed to start the server on port %s: %v", httpPort, err)
+    }
 }
